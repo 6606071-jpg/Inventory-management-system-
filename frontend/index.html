@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management System - Professional Inventory Management</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <h2>📦 Inventory Pro</h2>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#dashboard" class="nav-link active" data-page="dashboard">📊 Dashboard</a></li>
+                <li><a href="#products" class="nav-link" data-page="products">📦 Products</a></li>
+                <li><a href="#sales" class="nav-link" data-page="sales">💰 Sales</a></li>
+                <li><a href="#purchases" class="nav-link" data-page="purchases">📥 Purchases</a></li>
+                <li><a href="#reports" class="nav-link" data-page="reports">📈 Reports</a></li>
+            </ul>
+            <div class="logout">
+                <button id="logoutBtn">🚪 Logout</button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <h1 id="pageTitle">Dashboard</h1>
+                <div class="user-info">
+                    <span id="userName">User</span>
+                    <button id="toggleSidebar" class="menu-toggle">☰</button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="content">
+                <!-- Dashboard Page -->
+                <div id="dashboard" class="page active">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <h3>Total Products</h3>
+                            <p id="totalProducts" class="stat-value">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Low Stock Alerts</h3>
+                            <p id="lowStockAlerts" class="stat-value alert">0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Total Sales</h3>
+                            <p id="totalSales" class="stat-value">₹0</p>
+                        </div>
+                        <div class="stat-card">
+                            <h3>Stock Value</h3>
+                            <p id="stockValue" class="stat-value">₹0</p>
+                        </div>
+                    </div>
+
+                    <div class="alerts-section">
+                        <h3>⚠️ Low Stock Items</h3>
+                        <table id="lowStockTable">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>SKU</th>
+                                    <th>Current Stock</th>
+                                    <th>Threshold</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Products Page -->
+                <div id="products" class="page">
+                    <div class="page-header">
+                        <h2>Product Management</h2>
+                        <button id="addProductBtn" class="btn btn-primary">+ Add Product</button>
+                    </div>
+
+                    <div class="search-bar">
+                        <input type="text" id="productSearch" placeholder="Search products...">
+                        <select id="categoryFilter">
+                            <option value="">All Categories</option>
+                        </select>
+                    </div>
+
+                    <table id="productsTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>SKU</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <!-- Sales Page -->
+                <div id="sales" class="page">
+                    <div class="page-header">
+                        <h2>Sales Management</h2>
+                        <button id="recordSaleBtn" class="btn btn-primary">+ Record Sale</button>
+                    </div>
+
+                    <div class="search-bar">
+                        <input type="date" id="saleStartDate" placeholder="Start Date">
+                        <input type="date" id="saleEndDate" placeholder="End Date">
+                        <button id="filterSalesBtn" class="btn btn-secondary">Filter</button>
+                    </div>
+
+                    <table id="salesTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Product</th>
+                                <th>Customer</th>
+                                <th>Quantity</th>
+                                <th>Total Price</th>
+                                <th>Payment Method</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <!-- Purchases Page -->
+                <div id="purchases" class="page">
+                    <div class="page-header">
+                        <h2>Purchase Management</h2>
+                        <button id="recordPurchaseBtn" class="btn btn-primary">+ Record Purchase</button>
+                    </div>
+
+                    <div class="search-bar">
+                        <input type="date" id="purchaseStartDate" placeholder="Start Date">
+                        <input type="date" id="purchaseEndDate" placeholder="End Date">
+                        <button id="filterPurchasesBtn" class="btn btn-secondary">Filter</button>
+                    </div>
+
+                    <table id="purchasesTable">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Product</th>
+                                <th>Supplier</th>
+                                <th>Quantity</th>
+                                <th>Purchase Price</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+
+                <!-- Reports Page -->
+                <div id="reports" class="page">
+                    <div class="page-header">
+                        <h2>Reports & Analytics</h2>
+                    </div>
+
+                    <div class="reports-grid">
+                        <div class="report-card">
+                            <h3>Sales Report</h3>
+                            <div class="report-filters">
+                                <input type="date" id="salesReportStart">
+                                <input type="date" id="salesReportEnd">
+                                <button class="btn btn-secondary" onclick="generateSalesReport()">Generate</button>
+                            </div>
+                            <div id="salesReportContent"></div>
+                        </div>
+
+                        <div class="report-card">
+                            <h3>Profit Analysis</h3>
+                            <div class="report-filters">
+                                <input type="date" id="profitReportStart">
+                                <input type="date" id="profitReportEnd">
+                                <button class="btn btn-secondary" onclick="generateProfitReport()">Generate</button>
+                            </div>
+                            <div id="profitReportContent"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Add/Edit Product -->
+    <div id="productModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Add Product</h2>
+            <form id="productForm">
+                <input type="hidden" id="productId">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" id="productName" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="productDescription"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>SKU</label>
+                    <input type="text" id="productSku" required>
+                </div>
+                <div class="form-group">
+                    <label>Price</label>
+                    <input type="number" id="productPrice" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" id="productQuantity" required>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <input type="text" id="productCategory">
+                </div>
+                <button type="submit" class="btn btn-primary">Save Product</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Record Sale -->
+    <div id="saleModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Record Sale</h2>
+            <form id="saleForm">
+                <div class="form-group">
+                    <label>Product</label>
+                    <select id="saleProduct" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" id="saleQuantity" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <input type="text" id="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <select id="paymentMethod">
+                        <option value="cash">Cash</option>
+                        <option value="card">Card</option>
+                        <option value="cheque">Cheque</option>
+                        <option value="online">Online</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Record Sale</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal for Record Purchase -->
+    <div id="purchaseModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Record Purchase</h2>
+            <form id="purchaseForm">
+                <div class="form-group">
+                    <label>Product</label>
+                    <select id="purchaseProduct" required></select>
+                </div>
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" id="purchaseQuantity" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label>Purchase Price per Unit</label>
+                    <input type="number" id="purchasePrice" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label>Supplier Name</label>
+                    <input type="text" id="supplierName" required>
+                </div>
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea id="purchaseNotes"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Record Purchase</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="loginUsername" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
